@@ -1,2 +1,3 @@
 # パッケージフォルダ内の .ts ファイルは要らない
 node_modules/
+.gitignore
