@@ -80,10 +80,22 @@ router.route('/users/:user_id')
 // 1人のユーザの情報を取得 (GET http://localhost:3000/api/users/:user_id)
     .get(function(req, res) {
         //user_idが一致するデータを探す．
-        User.findById(req.params.user_id, function(err, user) {
+        User.find({user_id : req.params.user_id}, function(err, user) {
+
+            let resObj = {};
+
             if (err)
                 res.send(err);
-            res.json(user);
+            resObj['user'] = user;
+            // res.json(user);
+            Follows.find({
+              user_id: req.params.user_id,
+            }, function(err, followers) {
+                if (err)
+                    res.send(err);
+                resObj['followers'] = followers;
+                res.json(resObj);
+            });
         });
     })
 // 1人のユーザの情報を更新 (PUT http://localhost:3000/api/users/:user_id)
@@ -108,7 +120,7 @@ router.route('/users/:user_id')
 // 1人のユーザの情報を削除 (DELETE http://localhost:3000/api/users/:user_id)
     .delete(function(req, res) {
         User.remove({
-            _id: req.params.user_id
+          user_id: req.params.user_id
         }, function(err, user) {
             if (err)
                 res.send(err);
