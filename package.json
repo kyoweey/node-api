@@ -7,6 +7,7 @@
         "body-parser": "~1.0.2"
     },
     "devDependencies": {
+        "heroku": "^7.7.10",
         "hotnode": "0.0.8"
     }
 }
